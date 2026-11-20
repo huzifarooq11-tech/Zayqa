@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#111827">
+    <meta name="description" content="Zayqa - Voice-powered restaurant order management">
+
+    <title>Zayqa | Restaurant Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark">Z</div>
+
+            <div>
+                <strong>Zayqa</strong>
+                <span>RESTAURANT MANAGEMENT</span>
+            </div>
+        </div>
+
+        <div class="side-label">WORKSPACE</div>
+
+        <a class="nav-item active" href="#orders">
+            <span>▦</span>
+            Orders
+            <b id="navOrderCount">0</b>
+        </a>
+
+        <a class="nav-item" href="#menu">
+            <span>☷</span>
+            Menu
+        </a>
+
+        <div class="sidebar-bottom">
+
+            <div class="live-card">
+                <span class="pulse"></span>
+
+                <div>
+                    <strong>Live system</strong>
+                    <small>Voice relay ready</small>
+                </div>
+            </div>
+
+            <div class="user-chip">
+                <div class="avatar">Z</div>
+
+                <div>
+                    <strong>Restaurant staff</strong>
+                    <small>Front of house</small>
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <div>
+                <div class="eyebrow">
+                    ZAYQA / RESTAURANT OPERATIONS
+                </div>
+
+                <h1>Order management</h1>
+
+                <p>
+                    Manage dine-in orders with your voice,
+                    or update them manually.
+                </p>
+            </div>
+
+            <div class="top-actions">
+                <span class="date-pill" id="todayLabel">
+                    Today
+                </span>
+
+                <button class="icon-btn"
+                        id="refreshBtn"
+                        aria-label="Refresh dashboard">
+                    ↻
+                </button>
+            </div>
+
+        </header>
+
+        <!-- STATISTICS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Active orders</span>
+                    <span class="stat-icon orange">▣</span>
+                </div>
+
+                <strong id="activeCount">0</strong>
+                <small>Orders in progress</small>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>New orders</span>
+                    <span class="stat-icon blue">＋</span>
+                </div>
+
+                <strong id="newCount">0</strong>
+                <small>Awaiting kitchen</small>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Ready for service</span>
+                    <span class="stat-icon green">✓</span>
+                </div>
+
+                <strong id="readyCount">0</strong>
+                <small>Ready to be served</small>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Active order value</span>
+                    <span class="stat-icon purple">₨</span>
+                </div>
+
+                <strong id="revenueValue">₨0</strong>
+                <small>Current open orders</small>
+            </div>
+
+        </section>
+
+        <!-- ORDER AND VOICE WORKSPACE -->
+        <section class="workspace-grid" id="orders">
+
+            <!-- LIVE ORDERS -->
+            <div class="panel orders-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h2>Live orders</h2>
+
+                        <p>
+                            Orders update automatically
+                            as waiters speak.
+                        </p>
+                    </div>
+
+                    <span class="live-tag">
+                        <i></i> LIVE
+                    </span>
+                </div>
+
+                <div class="filter-row">
+
+                    <div class="filter-tabs">
+
+                        <button class="filter active"
+                                data-filter="All">
+                            All orders
+                        </button>
+
+                        <button class="filter"
+                                data-filter="New">
+                            New
+                        </button>
+
+                        <button class="filter"
+                                data-filter="Preparing">
+                            Preparing
+                        </button>
+
+                        <button class="filter"
+                                data-filter="Ready">
+                            Ready
+                        </button>
+
+                    </div>
+
+                    <span class="muted" id="orderCountLabel">
+                        0 orders
+                    </span>
+
+                </div>
+
+                <div id="ordersList" class="orders-list">
+
+                    <div class="empty-state">
+                        <div class="empty-icon">▤</div>
+
+                        <strong>No orders yet</strong>
+
+                        <p>
+                            Start a voice session and say,
+                            "Create an order for table 4."
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="right-column">
+
+                <!-- VOICE ASSISTANT -->
+                <div class="panel voice-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Voice order assistant</h2>
+                            <p>Hands-free order taking</p>
+                        </div>
+
+                        <span class="voice-orb">◖</span>
+                    </div>
+
+                    <div class="voice-status" id="voiceStatus">
+                        <span class="status-dot"></span>
+                        <span>Not connected</span>
+                    </div>
+
+                    <div class="voice-visual" id="voiceVisual">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="voice-buttons">
+
+                        <button class="btn-primary" id="startBtn">
+                            ▶ Start conversation
+                        </button>
+
+                        <button class="btn-stop"
+                                id="stopBtn"
+                                disabled>
+                            Stop
+                        </button>
+
+                    </div>
+
+                    <p class="voice-hint">
+                        Speak naturally. The assistant processes
+                        each completed sentence and keeps listening.
+                    </p>
+
+                    <div class="conversation" id="conversation">
+                        <div class="conversation-empty">
+                            Your voice conversation will appear here.
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ACTIVITY HISTORY -->
+                <div class="panel activity-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h2>System activity</h2>
+                            <p>Live voice and order events</p>
+                        </div>
+
+                        <button class="text-btn" id="clearLogBtn">
+                            Clear
+                        </button>
+                    </div>
+
+                    <div id="activityLog" class="activity-log">
+
+                        <div class="log-item">
+                            <span class="log-dot"></span>
+
+                            <div>
+                                <strong>Dashboard ready</strong>
+                                <small>Waiting for activity</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- RESTAURANT MENU -->
+        <section class="panel menu-panel" id="menu">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>Restaurant menu</h2>
+
+                    <p>
+                        Zayqa's built-in menu · Prices in PKR
+                    </p>
+                </div>
+
+                <span class="menu-count" id="menuCount">
+                    0 items
+                </span>
+            </div>
+
+            <div class="menu-grid" id="menuGrid"></div>
+
+        </section>
+
+        <footer>
+            <strong>ZAYQA</strong>
+            <span>·</span>
+            Restaurant Management System
+            <span>·</span>
+            PKR
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
